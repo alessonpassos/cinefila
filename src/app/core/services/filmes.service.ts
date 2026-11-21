@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { defer, Observable, throwError, timeout } from 'rxjs';
 import { CONFIG_LOCAL } from '../config-local';
-import { Creditos, FilmeDetalhes, PaginaFilmes } from '../models/filme';
+import { Creditos, FilmeDetalhes, PaginaFilmes } from '../models/filmes';
 
 @Injectable({ providedIn: 'root' })
 export class FilmesService {
