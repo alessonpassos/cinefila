@@ -1,0 +1,73 @@
+<ion-content>
+  <main class="pagina">
+    <header class="titulo-pagina">
+      <p class="sobretitulo">EXPLORE O CINEMA</p>
+      <h1>Qual vai ser o<br /><em>próximo filme?</em></h1>
+      <p>Do favorito de sempre à descoberta inesperada. Busque pelo título.</p>
+    </header>
+    <div class="campo-busca">
+      <ion-searchbar
+        aria-label="Buscar filme por título"
+        placeholder="Digite o nome de um filme…"
+        [value]="termo()"
+        (ionInput)="aoDigitar($event)"
+        (ionClear)="buscar('')"
+        show-clear-button="focus"
+        [debounce]="0"
+      />
+    </div>
+    @if (carregando()) {
+    <app-estado [carregando]="true" titulo="Procurando sua próxima sessão…" />
+    } @else if (erro()) {
+    <app-estado
+      [erro]="true"
+      titulo="Não foi possível buscar"
+      [mensagem]="erro()"
+      (tentar)="buscar()"
+    />
+    } @else if (pesquisou() && resultados().length === 0) {
+    <app-estado
+      icone="search-outline"
+      titulo="Nenhum filme encontrado"
+      [mensagem]="'Não encontramos resultados para “' + termo().trim() + '”. Confira o título ou tente outra palavra.'"
+    />
+    } @else if (pesquisou()) {
+    <div class="cabecalho-secao">
+      <div>
+        <p class="sobretitulo">RESULTADOS DA BUSCA</p>
+        <h2>Uma história te espera<span class="ponto">.</span></h2>
+      </div>
+      <span class="detalhe-secao"
+        >Exibindo {{ resultados().length }} de {{ total() }} resultados</span
+      >
+    </div>
+    <div class="grade-filmes">
+      @for (filme of resultados(); track filme.id) {
+      <app-filme-card [filme]="filme" /> }
+    </div>
+    @if (total() > resultados().length) {
+    <p class="ajuda">
+      Mostramos os primeiros resultados da TMDB. Digite um título mais
+      específico para refinar a busca.
+    </p>
+    } } @else {
+    <app-estado
+      icone="search-outline"
+      titulo="Toda boa sessão começa com uma escolha"
+      mensagem="Digite um título acima para encontrar filmes e conhecer suas histórias."
+    />
+    <div class="sugestoes">
+      <span>Uma ideia para começar:</span
+      ><ion-button size="small" fill="outline" (click)="buscar('Interestelar')"
+        >Interestelar</ion-button
+      ><ion-button
+        size="small"
+        fill="outline"
+        (click)="buscar('Cidade de Deus')"
+        >Cidade de Deus</ion-button
+      >
+    </div>
+    }
+    <app-creditos />
+  </main>
+</ion-content>
