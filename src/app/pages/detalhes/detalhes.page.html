@@ -1,0 +1,126 @@
+<ion-content>
+  <main class="pagina">
+    <a class="voltar" routerLink="/home"
+      ><ion-icon name="arrow-back-outline" aria-hidden="true" />Voltar para a
+      Home</a
+    >
+    @if (carregando()) {
+    <app-estado
+      [carregando]="true"
+      titulo="Abrindo a ficha do filme…"
+      mensagem="Preparando a história e quem faz parte dela."
+    />
+    } @else if (erro()) {
+    <app-estado
+      [erro]="true"
+      titulo="Não foi possível abrir o filme"
+      [mensagem]="erro()"
+      (tentar)="tentarNovamente()"
+    />
+    } @else if (filme(); as f) {
+    <section class="ficha" aria-label="Ficha do filme">
+      <div class="poster-detalhes">
+        <app-poster
+          [caminho]="f.poster_path"
+          [descricao]="'Pôster de ' + f.title"
+          [prioritario]="true"
+        />
+      </div>
+      <div class="ficha-texto">
+        <p class="sobretitulo">CONHEÇA A HISTÓRIA</p>
+        <h1>{{ f.title || 'Título não informado' }}</h1>
+        @if (f.tagline) {
+        <p class="tagline">{{ f.tagline }}</p>
+        }
+        <div class="metadados">
+          <span class="nota nota-ficha" [appDestaqueNota]="f.vote_average"
+            ><ion-icon name="star" aria-hidden="true" />{{ f.vote_average ==
+            null ? 'Sem nota' : (f.vote_average | number: '1.1-1') }}<small
+              >/ 10</small
+            ></span
+          >
+          <span class="duracao">{{ f.runtime | duracaoFilme }}</span>
+        </div>
+        <p class="generos-resumo">{{ f.genres | resumoGeneros }}</p>
+        <div class="sinopse">
+          <h2>Sinopse</h2>
+          <p>
+            {{ f.overview?.trim() || 'Sinopse não disponível em português para
+            este filme.' }}
+          </p>
+        </div>
+        <dl>
+          <div>
+            <dt>Lançamento</dt>
+            <dd>
+              {{ f.release_date ? (f.release_date | date: 'longDate' : 'UTC') :
+              'Data não informada' }}
+            </dd>
+          </div>
+          <div>
+            <dt>Gêneros</dt>
+            <dd>
+              @for (genero of f.genres; track genero.id) {
+              <ion-chip>{{ genero.name }}</ion-chip> } @empty { Gêneros não
+              informados }
+            </dd>
+          </div>
+        </dl>
+        <ion-button
+          class="botao-salvar"
+          [appEstadoSalvo]="salvo()"
+          (click)="alternarSalvo()"
+          ><ion-icon
+            [name]="salvo() ? 'checkmark-outline' : 'add-outline'"
+            slot="start"
+            aria-hidden="true"
+          />{{ salvo() ? 'Remover da minha lista' : 'Salvar na minha lista'
+          }}</ion-button
+        >
+        <p class="aviso-sucesso" role="status" aria-live="polite">
+          {{ aviso() }}
+        </p>
+        @if (lista.erro()) {
+        <p class="aviso-erro" role="alert">{{ lista.erro() }}</p>
+        }
+      </div>
+    </section>
+    <section class="elenco-secao" aria-labelledby="titulo-elenco">
+      <div class="cabecalho-secao">
+        <div>
+          <p class="sobretitulo">QUEM DÁ VIDA À HISTÓRIA</p>
+          <h2 id="titulo-elenco">Elenco<span class="ponto">.</span></h2>
+        </div>
+        <span class="detalhe-secao">Ator e personagem</span>
+      </div>
+      @if (erroElenco()) {
+      <app-estado
+        [erro]="true"
+        titulo="O elenco não carregou"
+        [mensagem]="erroElenco()"
+        (tentar)="tentarNovamente()"
+      />
+      } @else {
+      <div class="grade-elenco">
+        @for (ator of elenco(); track ator.credit_id) {
+        <article class="ator">
+          <div class="foto-ator">
+            <app-poster
+              [caminho]="ator.profile_path"
+              [descricao]="ator.name"
+              [retrato]="true"
+            />
+          </div>
+          <h3>{{ ator.name || 'Nome não informado' }}</h3>
+          <p>{{ ator.character || 'Personagem não informado' }}</p>
+        </article>
+        } @empty {
+        <p class="ajuda">Elenco não informado para este filme.</p>
+        }
+      </div>
+      }
+    </section>
+    }
+    <app-creditos />
+  </main>
+</ion-content>

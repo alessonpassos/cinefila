@@ -1,0 +1,35 @@
+<ion-app>
+  <header class="app-header">
+    <a class="marca" routerLink="/home" aria-label="Cinefila — Home"
+      ><span class="marca-icone"
+        ><ion-icon name="film-outline" aria-hidden="true" /></span
+      >cinefila<span class="ponto">.</span></a
+    >
+    <nav aria-label="Navegação principal">
+      <a
+        routerLink="/home"
+        routerLinkActive="ativo"
+        ariaCurrentWhenActive="page"
+        ><ion-icon name="film-outline" aria-hidden="true" /><span>Home</span></a
+      >
+      <a
+        routerLink="/buscar"
+        routerLinkActive="ativo"
+        ariaCurrentWhenActive="page"
+        ><ion-icon name="search-outline" aria-hidden="true" /><span
+          >Buscar</span
+        ></a
+      >
+      <a
+        routerLink="/minha-lista"
+        routerLinkActive="ativo"
+        ariaCurrentWhenActive="page"
+        ><ion-icon name="bookmark-outline" aria-hidden="true" /><span
+          >Minha lista</span
+        ><span class="contador">{{ lista.filmes().length }}</span></a
+      >
+    </nav>
+    <span class="header-legenda">PARA QUEM AMA CINEMA</span>
+  </header>
+  <div class="conteudo-rotas"><ion-router-outlet /></div>
+</ion-app>

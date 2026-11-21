@@ -1,0 +1,58 @@
+<ion-content>
+  <main class="pagina">
+    <header class="titulo-pagina">
+      <p class="sobretitulo">SEU CINEMA PARTICULAR</p>
+      <h1>Boas histórias.<br /><em>Guardadas para depois.</em></h1>
+      <p>Sua seleção para a próxima sessão, salva neste navegador.</p>
+    </header>
+    @if (lista.erro()) {
+    <p class="aviso-erro" role="alert">{{ lista.erro() }}</p>
+    }
+    <p class="aviso-sucesso" role="status" aria-live="polite">{{ aviso() }}</p>
+    @if (lista.filmes().length === 0) {
+    <app-estado
+      icone="bookmark-outline"
+      titulo="Sua lista está esperando a primeira história"
+      mensagem="Abra um filme e toque em “Salvar na minha lista”. Ele fica guardado aqui para a próxima sessão."
+    />
+    <div class="acao-central">
+      <ion-button routerLink="/home"
+        >Descobrir filmes<ion-icon
+          name="arrow-forward-outline"
+          slot="end"
+          aria-hidden="true"
+      /></ion-button>
+    </div>
+    } @else {
+    <div class="cabecalho-secao">
+      <div>
+        <p class="sobretitulo">PRÓXIMAS SESSÕES</p>
+        <h2>Minha lista<span class="ponto">.</span></h2>
+      </div>
+      <span class="detalhe-secao"
+        >{{ lista.filmes().length }} {{ lista.filmes().length === 1 ? 'filme
+        salvo' : 'filmes salvos' }}</span
+      >
+    </div>
+    <div class="grade-filmes">
+      @for (filme of lista.filmes(); track filme.id) {
+      <article>
+        <app-filme-card [filme]="filme" /><ion-button
+          class="remover-lista"
+          fill="clear"
+          size="small"
+          (click)="remover(filme)"
+          [attr.aria-label]="'Remover ' + filme.title + ' da minha lista'"
+          ><ion-icon
+            name="trash-outline"
+            slot="start"
+            aria-hidden="true"
+          />Remover</ion-button
+        >
+      </article>
+      }
+    </div>
+    }
+    <app-creditos />
+  </main>
+</ion-content>

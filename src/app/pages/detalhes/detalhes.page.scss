@@ -1,0 +1,145 @@
+.voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--suave);
+  text-decoration: none;
+  margin-bottom: 32px;
+}
+.ficha {
+  display: grid;
+  grid-template-columns: minmax(220px, 330px) 1fr;
+  gap: 6%;
+  align-items: start;
+}
+.poster-detalhes {
+  aspect-ratio: 2/3;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 16px 70px #0006;
+}
+.ficha-texto {
+  padding-top: 7px;
+  max-width: 720px;
+}
+h1 {
+  font-size: clamp(32px, 4vw, 56px);
+  margin: 12px 0;
+  line-height: 1.1;
+}
+.tagline {
+  font-style: italic;
+  color: var(--suave);
+  font-size: 16px;
+}
+.metadados {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  margin: 24px 0 16px;
+}
+.nota-ficha {
+  font-size: 20px;
+  padding: 10px 13px;
+}
+.nota-ficha small {
+  color: var(--suave);
+  font-size: 12px;
+  margin-left: 2px;
+}
+.duracao,
+.generos-resumo {
+  font-size: 14px;
+  color: #c4ceca;
+}
+.generos-resumo {
+  color: var(--lima);
+}
+.sinopse {
+  margin-top: 28px;
+}
+.sinopse h2 {
+  font-size: 17px;
+}
+.sinopse p {
+  color: #adb8bb;
+  font-size: 15px;
+  line-height: 1.8;
+}
+dl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 44px;
+  margin: 24px 0 28px;
+}
+dt {
+  color: #8e9b9f;
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  margin-bottom: 9px;
+}
+dd {
+  margin: 0;
+  font-size: 13px;
+}
+ion-chip {
+  margin: 0 5px 5px 0;
+  font-size: 11px;
+  color: #c7d2ce;
+  --background: #232c30;
+  height: 27px;
+}
+.elenco-secao {
+  margin-top: 52px;
+}
+.grade-elenco {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 24px;
+}
+.foto-ator {
+  aspect-ratio: 3/4;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.ator h3 {
+  font-size: 14px;
+  margin: 13px 0 5px;
+}
+.ator p {
+  font-size: 12px;
+  color: var(--suave);
+  margin: 0;
+  line-height: 1.5;
+}
+@media (max-width: 900px) {
+  .grade-elenco {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+  }
+}
+@media (max-width: 650px) {
+  .ficha {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .poster-detalhes {
+    width: min(65%, 280px);
+    margin: auto;
+  }
+  .ficha-texto {
+    padding: 0;
+  }
+  .grade-elenco {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .ator h3 {
+    font-size: 12px;
+  }
+  .ator p {
+    font-size: 11px;
+  }
+}

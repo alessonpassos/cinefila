@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Genero } from '../../core/models/filme';
+import { Genero } from '../../core/models/filmes';
 
 @Pipe({ name: 'resumoGeneros', standalone: true })
 export class ResumoGenerosPipe implements PipeTransform {
